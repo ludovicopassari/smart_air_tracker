@@ -1,8 +1,10 @@
 #include <Arduino.h>
-#include "Sensor.h"
+
 #include "SEN55Sensor.h"
+#include "BMP280Sensor.h"
 
 SensorInterface<SEN55Data>* environmentSensor = new SEN55Sensor();
+SensorInterface<BMP280Data>* pressureSensor = new BMP280Sensor();
 
 void setup() {
 
@@ -15,11 +17,15 @@ void setup() {
     Serial.println(errorMessage);
   }
 
+  pressureSensor->begin(nullptr);
+
+
 }
 
 void loop() {
 
   SEN55Data envData = environmentSensor->readSensorData();
+  BMP280Data pressData = pressureSensor->readSensorData();
 
   Serial.print("Error message : ");
   Serial.println(envData.errorMessage);
@@ -48,6 +54,14 @@ void loop() {
   Serial.print("NOx index : ");
   Serial.println(envData.noxIndex);
 
+  Serial.print("BMP280 temperature : ");
+  Serial.println(pressData.temperature);
+
+  Serial.print("BMP280 pressure : ");
+  Serial.println(pressData.pressure);
+
+
+  Serial.println("...........................\n");
   delay(4000);
 }
 

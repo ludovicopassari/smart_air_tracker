@@ -20,7 +20,7 @@ public:
   virtual T readSensorData() = 0;
 
 
-  virtual ~SensorInterface() {}
+  virtual ~SensorInterface() = default;
 };
 
 #endif //INC_0_1_0_ALPHA_1_SENSORINTERFACE_H
