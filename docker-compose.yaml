@@ -1,0 +1,10 @@
+services:
+  ota-server:
+    build:
+      context: ./services/ota-server              # Directory "ota-server" come contesto di build
+      dockerfile: nginx/Dockerfile 
+    ports:
+      # host:container
+      - "80:80" 
+    volumes:
+      - ./services/ota-server/firmware:/usr/share/nginx/html/firmware
