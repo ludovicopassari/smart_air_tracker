@@ -10,8 +10,8 @@
 template<typename T>
 class SensorInterface {
 public:
-
-  virtual void begin() = 0;
+  // returns true if some error occur
+  virtual bool begin(char* errorMessage) = 0;
 
 
   //virtual float readSingleValue() = 0;

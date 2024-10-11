@@ -6,41 +6,32 @@
 
 SEN55Sensor::SEN55Sensor() = default;
 
-void SEN55Sensor::begin() {
+bool SEN55Sensor::begin(char *errorMessage) {
   Wire.begin();
 
   sen55.begin(Wire);
 
   uint16_t error;
-  char errorMessage[256];
   error = sen55.deviceReset();
   if (error) {
-    Serial.print("Error trying to execute deviceReset(): ");
     errorToString(error, errorMessage, 256);
-    Serial.println(errorMessage);
+    return false;
   }
 
   float tempOffset = 0.0;
   error = sen55.setTemperatureOffsetSimple(tempOffset);
   if (error) {
-    Serial.print("Error trying to execute setTemperatureOffsetSimple(): ");
     errorToString(error, errorMessage, 256);
-    Serial.println(errorMessage);
-  } else {
-    Serial.print("Temperature Offset set to ");
-    Serial.print(tempOffset);
-    Serial.println(" deg. Celsius (SEN54/SEN55 only");
+    return false;
   }
-
   // Start Measurement
   error = sen55.startMeasurement();
   if (error) {
-    Serial.print("Error trying to execute startMeasurement(): ");
     errorToString(error, errorMessage, 256);
-    Serial.println(errorMessage);
+    return false;
   }
 
-
+  return true;
 }
 
 SEN55Data SEN55Sensor::readSensorData() {

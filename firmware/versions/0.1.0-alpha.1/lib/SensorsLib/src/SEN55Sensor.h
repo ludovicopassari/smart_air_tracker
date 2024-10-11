@@ -27,7 +27,7 @@ private:
 public:
   SEN55Sensor();
 
-  void begin() override;
+  bool begin(char* errorMessage) override;
 
   SEN55Data readSensorData() override;
 };

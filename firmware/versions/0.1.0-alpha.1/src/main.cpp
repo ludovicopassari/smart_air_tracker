@@ -9,8 +9,11 @@ void setup() {
   Serial.begin(115200);
   while (!Serial);
 
-  environmentSensor->begin();
-
+  char errorMessage[256];
+  if (!environmentSensor->begin(errorMessage)) {
+    Serial.print("Error : ");
+    Serial.println(errorMessage);
+  }
 
 }
 
@@ -44,7 +47,6 @@ void loop() {
 
   Serial.print("NOx index : ");
   Serial.println(envData.noxIndex);
-
 
   delay(4000);
 }
